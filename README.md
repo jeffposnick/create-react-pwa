@@ -10,6 +10,7 @@
 - [What additional changes might be needed?](#what-additional-changes-might-be-needed)
   - [I've added in React Router and now my URLs don't work offline](#ive-added-in-react-router-and-now-my-urls-dont-work-offline)
   - [I'm using cross-origin APIs or resources, and they aren't working while offline](#im-using-cross-origin-apis-or-resources-and-they-arent-working-while-offline)
+- [How can I try out the Progressive Web App?](#how-can-i-try-out-the-progressive-web-app)
 - [How can I report bugs?](#how-can-i-report-bugs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -110,6 +111,10 @@ set up runtime caching, along with all the other `sw-precache` options. This
 can be used as a starting point, and you'd add in the
 `--config-file=sw-precache-config.json` flag to your `build` script to get
 `sw-precache` to start using that file.
+
+## How can I try out the Progressive Web App?
+
+The code from this project is deployed at https://jeffy.info/create-react-pwa/
 
 ## How can I report bugs?
 
