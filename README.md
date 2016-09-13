@@ -109,7 +109,7 @@ it via a command-line flag. Instead, you can transition to a JSON config file to
 set up runtime caching, along with all the other `sw-precache` options. This
 [sample config file](https://github.com/GoogleChrome/sw-precache/blob/master/demo/sw-precache-config.json)
 can be used as a starting point, and you'd add in the
-`--config-file=sw-precache-config.json` flag to your `build` script to get
+`--config=sw-precache-config.json` flag to your `build` script to get
 `sw-precache` to start using that file.
 
 ## How can I try out the Progressive Web App?
