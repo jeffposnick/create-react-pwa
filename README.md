@@ -25,7 +25,7 @@ and adding in some additional bits commonly found in
 ## What changes were made?
 
 GitHub's visual diff shows
-[all the changes needed](https://github.com/jeffposnick/create-react-pwa/compare/starting-point...pwa)
+[all the changes needed](https://github.com/jeffposnick/create-react-pwa/compare/c-r-a-0.6.0...c-r-pwa-0.6.0)
 to make a Progressive Web App. They include:
 
 ### Adding in a service worker
@@ -59,19 +59,9 @@ provides metadata about your web app. Along with a service worker, your web
 app needs a manifest in order to trigger the Add to Homescreen prompt (in
 supported browsers).
 
-### Adding in a GitHub deployment step
-
-While not strictly necessary, a new `npm run gh-pages` script was added in,
-relying on the [`gh-pages`](https://www.npmjs.com/package/gh-pages) module.
-
-Additionally, the `"homepage": "./"` property was set in `package.json`, to
-ensure that [relative paths](https://github.com/facebookincubator/create-react-app/pull/94)
-are used in the generated output. This plays nicely with both GitHub Pages
-hosting and should work well with other hosting environments, too.
-
 ## What additional changes might be needed?
 
-By following the [changes made](https://github.com/jeffposnick/create-react-pwa/compare/starting-point...pwa),
+By following the [changes made](https://github.com/jeffposnick/create-react-pwa/compare/c-r-a-0.6.0...c-r-pwa-0.6.0),
 you should end up with a Progressive Web App using React that's ready to be
 deployed to any static hosting environment. However, if you add in additional
 functionality to the starting point, you may need to update your `sw-precache`
@@ -79,7 +69,7 @@ settings to ensure the service worker behaves properly.
 
 ### I've added in React Router and now my URLs don't work offline
 
-If you've followed the suggestions in the [`create-react-app` documentation](https://github.com/jeffposnick/create-react-pwa/blob/539cddae29062db0fc0896444869a6bf1939f266/README.md#github-pages)
+If you've followed the suggestions in the `create-react-app` documentation
 and added in [React Router](https://github.com/reactjs/react-router) using the
 History API to manage URLs, then you need to tell the service worker that
 navigations to all the random URLs your web app now supports should actually
@@ -87,8 +77,8 @@ be fulfilled with the cached copy of your `index.html`. You can do this
 with the [`navigateFallback`](https://github.com/GoogleChrome/sw-precache#navigatefallback-string)
 option in `sw-precache`.
 
-Assuming you're using the `sw-precache` command-line interface, the additional
-flag would look like `--navigate-fallback='index.html'`.
+Assuming you're using the `sw-precache-config.js` configuration file, the
+additional option would look like `navigateFallback: 'index.html'`.
 
 ### I'm using cross-origin APIs or resources, and they aren't working while offline
 
@@ -103,14 +93,6 @@ set up runtime caching strategies, using URL patterns to determine what
 strategy and cache sizes to use. `sw-precache` provides an easy way to use
 `sw-toolbox` via the [`runtimeCaching`](https://github.com/GoogleChrome/sw-precache#runtimecaching-arrayobject)
 configuration option.
-
-Because the configuration can get complex, it's best not to attempt to provide
-it via a command-line flag. Instead, you can transition to a JSON config file to
-set up runtime caching, along with all the other `sw-precache` options. This
-[sample config file](https://github.com/GoogleChrome/sw-precache/blob/master/demo/sw-precache-config.json)
-can be used as a starting point, and you'd add in the
-`--config=sw-precache-config.json` flag to your `build` script to get
-`sw-precache` to start using that file.
 
 ## How can I try out the Progressive Web App?
 
