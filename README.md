@@ -96,7 +96,7 @@ configuration option.
 
 ## How can I try out the Progressive Web App?
 
-The code from this project is deployed at https://jeffy.info/create-react-pwa/
+The code from this project is deployed at https://jeffposnick.github.io/create-react-pwa/
 
 ## How can I report bugs?
 
