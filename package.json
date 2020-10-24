@@ -1,0 +1,32 @@
+{
+  "name": "trisomorphic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "swc src -d build",
+    "serve": "npm run build && node build/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@swc/cli": "^0.1.27",
+    "@swc/core": "^1.2.36",
+    "@tinyhttp/app": "^0.5.5",
+    "@tinyhttp/logger": "^0.5.5",
+    "htm": "^3.0.4",
+    "import-sort-style-module": "^6.0.0",
+    "preact": "^10.5.5",
+    "preact-render-to-string": "^5.1.11",
+    "prettier": "^2.1.2",
+    "prettier-plugin-import-sort": "0.0.6"
+  },
+  "importSort": {
+    ".js, .ts": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  }
+}
