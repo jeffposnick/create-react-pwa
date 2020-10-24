@@ -1,31 +1,27 @@
-import render from 'preact-render-to-string';
+import {HTTPMethod} from 'trouter';
 
-import {Index} from '../components/index';
-import {Page1} from '../components/page1';
-import {Page2} from '../components/page2';
-import {end} from '../partials/end';
-import {start} from '../partials/start';
+import {router} from '../router';
 
 declare const self: ServiceWorkerGlobalScope;
 
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
-    if (event.request.url.endsWith('/page1')) {
+    const url = new URL(event.request.url);
+    const {handlers} = router.find(
+      event.request.method as HTTPMethod,
+      url.pathname,
+    );
+
+    if (handlers.length > 0) {
+      const body = handlers[0]();
       event.respondWith(
-        new Response(start('Page 1 (SW)') + render(Page1()) + end(), {
-          headers: {'content-type': 'text/html'},
-        }),
+        new Response(body, {headers: {'content-type': 'text/html'}}),
       );
-    } else if (event.request.url.endsWith('/page2')) {
+    } else {
       event.respondWith(
-        new Response(start('Page 2 (SW)') + render(Page2()) + end(), {
-          headers: {'content-type': 'text/html'},
-        }),
-      );
-    } else if (event.request.url.endsWith('/')) {
-      event.respondWith(
-        new Response(start('Index (SW)') + render(Index()) + end(), {
-          headers: {'content-type': 'text/html'},
+        new Response('Route not found.', {
+          status: 404,
+          headers: {'content-type': 'text/plain'},
         }),
       );
     }
