@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "jsxFactory": "h",
-    "allowJs": true,
+    "lib": ["WebWorker"],
     "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
-    "lib": ["WebWorker"]
+    "noImplicitAny": true,
+    "target": "ES2018"
   }
 }

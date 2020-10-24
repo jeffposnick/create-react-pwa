@@ -5,7 +5,7 @@ module.exports = [
     entry: {
       server: './src/server/index.ts',
     },
-    mode: 'development',
+    mode: 'production',
     target: 'node',
     module: {
       rules: [
@@ -28,7 +28,7 @@ module.exports = [
     entry: {
       sw: './src/sw/index.ts',
     },
-    mode: 'development',
+    mode: 'production',
     target: 'webworker',
     module: {
       rules: [
@@ -41,6 +41,32 @@ module.exports = [
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        minSize: 1,
+        automaticNameDelimiter: '~',
+        name: (module, chunks, cacheGroupKey) => {
+          const moduleFileName = module
+            .identifier()
+            .split('/')
+            .reduceRight((item) => item);
+          const allChunksNames = chunks.map((item) => item.name).join('~');
+          return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
+        },
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+          },
+          components: {
+            test: /[\\/]components[\\/]/,
+          },
+          partials: {
+            test: /[\\/]partials[\\/]/,
+          },
+        },
+      },
     },
     output: {
       filename: '[name].js',
