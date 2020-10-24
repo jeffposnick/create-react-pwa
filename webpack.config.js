@@ -5,7 +5,7 @@ module.exports = [
     entry: {
       server: './src/server/index.ts',
     },
-    mode: 'production',
+    mode: process.env.NODE_ENV || 'production',
     target: 'node',
     module: {
       rules: [
@@ -28,7 +28,7 @@ module.exports = [
     entry: {
       sw: './src/sw/index.ts',
     },
-    mode: 'production',
+    mode: process.env.NODE_ENV || 'production',
     target: 'webworker',
     module: {
       rules: [
@@ -57,13 +57,13 @@ module.exports = [
         },
         cacheGroups: {
           vendor: {
-            test: /[\\/]node_modules[\\/]/,
+            test: new RegExp('/node_modules/'),
           },
           components: {
-            test: /[\\/]components[\\/]/,
+            test: new RegExp('/components/'),
           },
           partials: {
-            test: /[\\/]partials[\\/]/,
+            test: new RegExp('/partials/'),
           },
         },
       },
