@@ -1,29 +1,15 @@
-import {HTTPMethod} from 'trouter';
-
-import {router} from '../router';
+import {end} from '../partials/end';
+import {start} from '../partials/start';
+import {ssr} from '../ssr';
 
 declare const self: ServiceWorkerGlobalScope;
 
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     const url = new URL(event.request.url);
-    const {handlers} = router.find(
-      event.request.method as HTTPMethod,
-      url.pathname,
+    const body = start() + ssr(url.pathname) + end();
+    event.respondWith(
+      new Response(body, {headers: {'content-type': 'text/html'}}),
     );
-
-    if (handlers.length > 0) {
-      const body = handlers[0]();
-      event.respondWith(
-        new Response(body, {headers: {'content-type': 'text/html'}}),
-      );
-    } else {
-      event.respondWith(
-        new Response('Route not found.', {
-          status: 404,
-          headers: {'content-type': 'text/plain'},
-        }),
-      );
-    }
   }
 });
