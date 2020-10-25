@@ -1,7 +1,7 @@
 {
   "name": "trisomorphic",
   "version": "1.0.0",
-  "description": "",
+  "description": "Work in progress demo of a trisomorphic Preact application.",
   "main": "",
   "scripts": {
     "clean": "shx rm -rf build",
