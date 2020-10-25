@@ -10,7 +10,7 @@ function ssr(pathname: string, search = '') {
     push: () => {},
     replace: () => {},
   };
-  return render(App(customHistory));
+  return render(App({customHistory}));
 }
 
 export {ssr};

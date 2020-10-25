@@ -5,7 +5,7 @@ import {Index} from './index';
 import {Page1} from './page1';
 import {Page2} from './page2';
 
-export function App(customHistory?: CustomHistory) {
+export function App({customHistory}: {customHistory?: CustomHistory}) {
   return (
     <Router history={customHistory}>
       <Page1 path="/page1"></Page1>

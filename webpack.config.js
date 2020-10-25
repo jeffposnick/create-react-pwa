@@ -75,9 +75,9 @@ module.exports = [
   },
   {
     entry: {
-      index: './src/client/index.ts',
+      index: './src/client/index.tsx',
     },
-    mode: process.env.NODE_ENV || 'production',
+    mode: process.env.NODE_ENV || 'development',
     target: 'web',
     module: {
       rules: [
@@ -119,6 +119,7 @@ module.exports = [
     },
     output: {
       filename: '[name].js',
+      libraryTarget: 'window',
       path: path.resolve(__dirname, 'build', 'public', 'client'),
     },
   },
