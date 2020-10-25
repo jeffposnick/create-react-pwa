@@ -73,4 +73,53 @@ module.exports = [
       path: path.resolve(__dirname, 'build', 'public'),
     },
   },
+  {
+    entry: {
+      index: './src/client/index.ts',
+    },
+    mode: process.env.NODE_ENV || 'production',
+    target: 'web',
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js'],
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        minSize: 1,
+        automaticNameDelimiter: '~',
+        name: (module, chunks, cacheGroupKey) => {
+          const moduleFileName = module
+            .identifier()
+            .split('/')
+            .reduceRight((item) => item);
+          const allChunksNames = chunks.map((item) => item.name).join('~');
+          return `${cacheGroupKey}-${allChunksNames}-${moduleFileName}`;
+        },
+        cacheGroups: {
+          vendor: {
+            test: new RegExp('/node_modules/'),
+          },
+          components: {
+            test: new RegExp('/components/'),
+          },
+          partials: {
+            test: new RegExp('/partials/'),
+          },
+        },
+      },
+    },
+    output: {
+      filename: '[name].js',
+      path: path.resolve(__dirname, 'build', 'public', 'client'),
+    },
+  },
 ];
