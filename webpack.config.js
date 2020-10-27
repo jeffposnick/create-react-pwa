@@ -93,7 +93,7 @@ module.exports = [
     },
     optimization: {
       splitChunks: {
-        chunks: 'all',
+        chunks: 'async',
         minSize: 1,
         automaticNameDelimiter: '~',
         name: (module, chunks, cacheGroupKey) => {
@@ -119,7 +119,6 @@ module.exports = [
     },
     output: {
       filename: '[name].js',
-      libraryTarget: 'window',
       path: path.resolve(__dirname, 'build', 'public', 'client'),
     },
   },
