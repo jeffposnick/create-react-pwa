@@ -5,8 +5,9 @@
   "main": "",
   "scripts": {
     "clean": "shx rm -rf build",
-    "build": "npm run clean && webpack",
-    "serve": "npm run build && node build/server.js"
+    "build": "npm run clean && webpack && npm run static",
+    "serve": "npm run build && node build/server.js",
+    "static": "shx cp -r static/* build/public"
   },
   "keywords": [],
   "author": "",

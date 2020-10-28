@@ -1,0 +1,15 @@
+{
+  "short_name": "SO PWA",
+  "name": "SO Progressive Web App",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "display": "minimal-ui",
+  "background_color": "#ededed",
+  "theme_color": "#0093c4"
+}
