@@ -3,9 +3,9 @@
   "name": "SO Progressive Web App",
   "icons": [
     {
-      "src": "/icon.png",
+      "src": "/icon.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg"
     }
   ],
   "start_url": "/?utm_source=homescreen",

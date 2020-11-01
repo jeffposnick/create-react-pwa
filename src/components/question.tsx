@@ -15,25 +15,36 @@ function Profile({
 }) {
   return (
     <div class="profile">
-      <img src="${imageUrl}"
-           alt="Profile picture"
-           ?crossorigin=${
-            imageUrl && imageUrl.startsWith('https://www.gravatar.com/')
-          }
-      <a href="${profileLink}">${displayName}</a>
+      <img
+        src={imageUrl}
+        alt="Profile picture"
+        crossorigin={
+          imageUrl && imageUrl.startsWith('https://www.gravatar.com/')
+        }
+      />
+      <a href={profileLink}>{displayName}</a>
       at
-      <a href="${anchorLink}">${date}</a>
-    </div>);
+      <a href={anchorLink}>{date}</a>
+    </div>
+  );
 }
 
-function QuestionCard({id, title}: {id: string; title: string}) {
-  return html`
-    <a class="card" href="/questions/${id}" data-cache-url="${getQuestion(id)}">
-      ${title}
-    </a>
-  `;
-}
-
-export function Question(props: {path: string; questionId?: string}) {
-  return <h1>Page 2</h1>;
+export function Question(props: {
+  anchorLink: string;
+  body: string;
+  date: string;
+  displayName: string;
+  imageUrl: string;
+  path: string;
+  profileLink: string;
+  title: string;
+}) {
+  return (
+    <div>
+      <h3>{props.title}</h3>
+      <Profile {...props}></Profile>
+      <div>{props.body}</div>
+      <div></div>
+    </div>
+  );
 }

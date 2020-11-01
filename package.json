@@ -15,7 +15,9 @@
   "devDependencies": {
     "@tinyhttp/app": "^0.5.5",
     "@tinyhttp/logger": "^0.5.5",
+    "@types/html-escaper": "^3.0.0",
     "@types/polka": "^0.5.1",
+    "html-escaper": "^3.0.0",
     "import-sort-style-module": "^6.0.0",
     "polka": "^0.5.2",
     "preact": "^10.5.5",

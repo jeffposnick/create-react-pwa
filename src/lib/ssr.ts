@@ -1,9 +1,9 @@
 import render from 'preact-render-to-string';
 import {CustomHistory} from 'preact-router';
 
-import {App} from './components/app';
+import {App} from '../components/app';
 
-function ssr(pathname: string, search = '') {
+export function ssr(pathname: string, search = '') {
   const customHistory: CustomHistory = {
     listen: () => () => {},
     location: {pathname, search},
@@ -12,5 +12,3 @@ function ssr(pathname: string, search = '') {
   };
   return render(App({customHistory}));
 }
-
-export {ssr};

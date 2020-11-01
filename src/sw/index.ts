@@ -1,6 +1,6 @@
+import {ssr} from '../lib/ssr';
 import {end} from '../partials/end';
 import {start} from '../partials/start';
-import {ssr} from '../ssr';
 
 declare const self: ServiceWorkerGlobalScope;
 
