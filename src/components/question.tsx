@@ -29,8 +29,37 @@ function Profile({
   );
 }
 
+function Answer({
+  link,
+  creation_date,
+  owner,
+  body,
+}: {
+  link: string;
+  creation_date: string;
+  owner: {
+    profile_image: string;
+    display_name: string;
+    link: string;
+  };
+  body: string;
+}) {
+  return (
+    <div>
+      <Profile
+        anchorLink={link}
+        date={creation_date}
+        displayName={owner.display_name}
+        imageUrl={owner.profile_image}
+        profileLink={owner.link}
+      />
+    </div>
+  );
+}
+
 export function Question(props: {
   anchorLink: string;
+  answers: Array<object>;
   body: string;
   date: string;
   displayName: string;
@@ -44,7 +73,11 @@ export function Question(props: {
       <h3>{props.title}</h3>
       <Profile {...props}></Profile>
       <div>{props.body}</div>
-      <div></div>
+      <div>
+        {answers.map((data) => (
+          <QuestionCard {...data} />
+        ))}
+      </div>
     </div>
   );
 }
