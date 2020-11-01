@@ -1,6 +1,6 @@
 import {h} from 'preact';
 
-export function Index(props?: {path: string}) {
+export function Index(props: {path: string}) {
   return (
     <div>
       <h1>Index</h1>
