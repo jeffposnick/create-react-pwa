@@ -1,6 +1,6 @@
 import {h} from 'preact';
 
-export function About(props: {path: string}) {
+export function About({path}: {path: string}) {
   return (
     <div>
       <h3>About SO PWA</h3>

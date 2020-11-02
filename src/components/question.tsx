@@ -1,82 +1,70 @@
 import {h} from 'preact';
+import {StateUpdater, useEffect, useState} from 'preact/hooks';
 
-function Profile({
-  imageUrl,
-  date,
-  profileLink,
-  displayName,
-  anchorLink,
-}: {
-  imageUrl: string;
-  date: string;
-  profileLink: string;
-  displayName: string;
-  anchorLink: string;
-}) {
+import {
+  AnswerEntity,
+  QuestionData,
+  QuestionEntity,
+} from '../lib/StackOverflowAPI';
+import {getQuestion} from '../lib/urls';
+
+function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
   return (
     <div class="profile">
       <img
-        src={imageUrl}
+        src={owner.profile_image}
         alt="Profile picture"
-        crossorigin={
-          imageUrl && imageUrl.startsWith('https://www.gravatar.com/')
+        crossOrigin={
+          owner.profile_image.startsWith('https://www.gravatar.com/')
+            ? 'anonymous'
+            : undefined
         }
       />
-      <a href={profileLink}>{displayName}</a>
+      <a href={owner.link}>{owner.display_name}</a>
       at
-      <a href={anchorLink}>{date}</a>
+      <a href={link}>{creation_date}</a>
     </div>
   );
 }
 
-function Answer({
-  link,
-  creation_date,
-  owner,
-  body,
-}: {
-  link: string;
-  creation_date: string;
-  owner: {
-    profile_image: string;
-    display_name: string;
-    link: string;
-  };
-  body: string;
-}) {
+function Answer(props: AnswerEntity) {
   return (
     <div>
-      <Profile
-        anchorLink={link}
-        date={creation_date}
-        displayName={owner.display_name}
-        imageUrl={owner.profile_image}
-        profileLink={owner.link}
-      />
-    </div>
-  );
-}
-
-export function Question(props: {
-  anchorLink: string;
-  answers: Array<object>;
-  body: string;
-  date: string;
-  displayName: string;
-  imageUrl: string;
-  path: string;
-  profileLink: string;
-  title: string;
-}) {
-  return (
-    <div>
-      <h3>{props.title}</h3>
-      <Profile {...props}></Profile>
+      <Profile {...props} />
       <div>{props.body}</div>
+    </div>
+  );
+}
+
+export function Question({
+  path,
+  questionId,
+}: {
+  path: string;
+  questionId?: string;
+}) {
+  const [question, setQuestion]: [
+    question: QuestionEntity,
+    setQuestion: StateUpdater<QuestionEntity>,
+  ] = useState(null);
+
+  useEffect(() => {
+    fetch(getQuestion(questionId))
+      .then((res) => res.json())
+      .then((data: QuestionData) => setQuestion(data.items[0] || null));
+  }, []);
+
+  return (
+    <div>
+      <h3>{question.title}</h3>
+      <Profile {...question}></Profile>
+      <div>{question.body}</div>
       <div>
-        {answers.map((data) => (
-          <QuestionCard {...data} />
-        ))}
+        {question.answers
+          .sort((a, b) => (a.score < b.score ? 1 : 0))
+          .map((answer) => (
+            <Answer {...answer} />
+          ))}
       </div>
     </div>
   );

@@ -1,7 +1,11 @@
 import {h} from 'preact';
-import {useEffect, useState} from 'preact/hooks';
+import {StateUpdater, useEffect, useState} from 'preact/hooks';
 
 import {DEFAULT_SORT, DEFAULT_TAG, SORT_ORDERS} from '../lib/constants';
+import {
+  QuestionsForTagData,
+  QuestionsForTagEntity,
+} from '../lib/StackOverflowAPI';
 import {getQuestion, listQuestionsForTag} from '../lib/urls';
 
 function getTitle(tag: string, sort: string) {
@@ -10,18 +14,12 @@ function getTitle(tag: string, sort: string) {
   );
 }
 
-function QuestionCard({
-  question_id,
-  title,
-}: {
-  question_id: string;
-  title: string;
-}) {
+function QuestionCard({question_id, title}: QuestionsForTagEntity) {
   return (
     <a
       class="card"
       href={`/questions/${question_id}`}
-      data-cache-url={getQuestion(question_id)}
+      data-cache-url={getQuestion(`${question_id}`)}
     >
       {title}
     </a>
@@ -37,26 +35,29 @@ export function Index({
   tag?: string;
   sort?: string;
 }) {
-  const [items, setItems] = useState([]);
+  const [items, setItems]: [
+    items: Array<QuestionsForTagEntity>,
+    setItems: StateUpdater<Array<QuestionsForTagEntity>>,
+  ] = useState([]);
 
   useEffect(() => {
     fetch(listQuestionsForTag(tag, sort))
       .then((res) => res.json())
-      .then((data) => setItems((data && data.items) || []));
+      .then((data: QuestionsForTagData) =>
+        setItems((data && data.items) || []),
+      );
   }, []);
-
-  const titleString = getTitle(tag, sort);
 
   return (
     <div>
-      <h3>{titleString}</h3>
+      <h3>{getTitle(tag, sort)}</h3>
       <form method="GET">
         <label for="tag">Switch to tag:</label>
         <input type="text" name="tag" placeholder={DEFAULT_TAG}></input>
       </form>
       <div id="questions">
-        {items.map((data) => (
-          <QuestionCard {...data} />
+        {items.map((item) => (
+          <QuestionCard {...item} />
         ))}
       </div>
     </div>
