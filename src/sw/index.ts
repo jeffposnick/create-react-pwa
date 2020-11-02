@@ -4,12 +4,15 @@ import {start} from '../partials/start';
 
 declare const self: ServiceWorkerGlobalScope;
 
+function generateSSRResponse(pathname: string) {
+  return new Response(start() + ssr(pathname) + end(), {
+    headers: {'content-type': 'text/html'},
+  });
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     const url = new URL(event.request.url);
-    const body = start() + ssr(url.pathname) + end();
-    event.respondWith(
-      new Response(body, {headers: {'content-type': 'text/html'}}),
-    );
+    event.respondWith(generateSSRResponse(url.pathname));
   }
 });

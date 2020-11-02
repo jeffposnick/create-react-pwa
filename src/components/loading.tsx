@@ -1,5 +1,5 @@
 import {h} from 'preact';
 
-export function Loading() {
+export function Loading(): h.JSX.Element {
   return <div id="loading">Loading...</div>;
 }

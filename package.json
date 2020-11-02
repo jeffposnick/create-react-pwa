@@ -18,6 +18,7 @@
     "@types/html-escaper": "^3.0.0",
     "@types/polka": "^0.5.1",
     "import-sort-style-module": "^6.0.0",
+    "isomorphic-fetch": "^3.0.0",
     "polka": "^0.5.2",
     "preact": "^10.5.5",
     "preact-render-to-string": "^5.1.11",

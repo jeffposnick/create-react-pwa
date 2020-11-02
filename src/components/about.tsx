@@ -2,7 +2,7 @@ import {h} from 'preact';
 
 import {useDocumentTitle} from '../lib/useDocumentTitle';
 
-export function About({path}: {path: string}) {
+export function About({path}: {path: string}): h.JSX.Element {
   useDocumentTitle('About SO PWA');
 
   return (

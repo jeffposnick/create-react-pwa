@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 import path from 'path';
 
 import polka from 'polka';
@@ -18,5 +20,5 @@ polka()
     if (error) {
       throw error;
     }
-    console.log(`Running on http://localhost:${port}/`);
+    console.log(`Listening on http://localhost:${port}/`);
   });

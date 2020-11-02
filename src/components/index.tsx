@@ -16,7 +16,10 @@ function getTitle(tag: string, sort: string) {
   );
 }
 
-function QuestionCard({question_id, title}: QuestionsForTagEntity) {
+function QuestionCard({
+  question_id,
+  title,
+}: QuestionsForTagEntity): h.JSX.Element {
   return (
     <a
       class="card"
@@ -29,18 +32,20 @@ function QuestionCard({question_id, title}: QuestionsForTagEntity) {
 }
 
 export function Index({
+  initialQuestionsForTag = [],
   path,
   sort = DEFAULT_SORT,
   tag = DEFAULT_TAG,
 }: {
+  initialQuestionsForTag?: Array<QuestionsForTagEntity>;
   path: string;
   sort?: string;
   tag?: string;
-}) {
+}): h.JSX.Element {
   const [items, setItems]: [
     items: Array<QuestionsForTagEntity>,
     setItems: StateUpdater<Array<QuestionsForTagEntity>>,
-  ] = useState([]);
+  ] = useState(initialQuestionsForTag);
 
   useEffect(() => {
     fetch(listQuestionsForTag(tag, sort))

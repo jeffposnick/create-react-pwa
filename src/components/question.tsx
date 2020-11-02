@@ -10,7 +10,11 @@ import {getQuestion} from '../lib/urls';
 import {useDocumentTitle} from '../lib/useDocumentTitle';
 import {Loading} from './loading';
 
-function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
+function Profile({
+  link,
+  creation_date,
+  owner,
+}: QuestionEntity | AnswerEntity): h.JSX.Element {
   return (
     <div class="profile">
       <img
@@ -29,7 +33,7 @@ function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
   );
 }
 
-function Answer(props: AnswerEntity) {
+function Answer(props: AnswerEntity): h.JSX.Element {
   return (
     <div>
       <Profile {...props} />
@@ -43,16 +47,18 @@ function Answer(props: AnswerEntity) {
 }
 
 export function Question({
+  initialQuestion = null,
   path,
   questionId,
 }: {
+  initialQuestion?: QuestionEntity;
   path: string;
   questionId?: string;
-}) {
+}): h.JSX.Element {
   const [question, setQuestion]: [
     question: QuestionEntity,
     setQuestion: StateUpdater<QuestionEntity>,
-  ] = useState(null);
+  ] = useState(initialQuestion);
 
   useEffect(() => {
     fetch(getQuestion(questionId))

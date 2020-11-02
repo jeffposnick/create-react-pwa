@@ -1,7 +1,7 @@
 import {useEffect} from 'preact/hooks';
 
-export function useDocumentTitle(title: string) {
-  if (!document) {
+export function useDocumentTitle(title: string): void {
+  if (typeof document === 'undefined') {
     return;
   }
 

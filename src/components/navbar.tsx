@@ -1,6 +1,6 @@
 import {h} from 'preact';
 
-export function Navbar() {
+export function Navbar(): h.JSX.Element {
   return (
     <div>
       <header>
