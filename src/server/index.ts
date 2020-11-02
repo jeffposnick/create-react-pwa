@@ -7,9 +7,16 @@ import {ssr} from '../lib/ssr';
 import {end} from '../partials/end';
 import {start} from '../partials/start';
 
+const port = process.env.PORT || 3000;
+
 polka()
   .use(serveStatic(path.join(__dirname, 'public')))
   .get('/*', (request, response) => {
     response.end(start() + ssr(request.path) + end());
   })
-  .listen(3000);
+  .listen(port, (error: Error) => {
+    if (error) {
+      throw error;
+    }
+    console.log(`Running on http://localhost:${port}/`);
+  });

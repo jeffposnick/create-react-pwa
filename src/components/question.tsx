@@ -7,6 +7,7 @@ import {
   QuestionEntity,
 } from '../lib/StackOverflowAPI';
 import {getQuestion} from '../lib/urls';
+import {Loading} from './loading';
 
 function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
   return (
@@ -22,7 +23,7 @@ function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
       />
       <a href={owner.link}>{owner.display_name}</a>
       at
-      <a href={link}>{creation_date}</a>
+      <a href={link}>{new Date(creation_date * 1000).toLocaleString()}</a>
     </div>
   );
 }
@@ -31,7 +32,11 @@ function Answer(props: AnswerEntity) {
   return (
     <div>
       <Profile {...props} />
-      <div>{props.body}</div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: props.body,
+        }}
+      />
     </div>
   );
 }
@@ -54,11 +59,19 @@ export function Question({
       .then((data: QuestionData) => setQuestion(data.items[0] || null));
   }, []);
 
+  if (question === null) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <h3>{question.title}</h3>
       <Profile {...question}></Profile>
-      <div>{question.body}</div>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: question.body,
+        }}
+      />
       <div>
         {question.answers
           .sort((a, b) => (a.score < b.score ? 1 : 0))

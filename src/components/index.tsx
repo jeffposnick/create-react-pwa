@@ -7,6 +7,7 @@ import {
   QuestionsForTagEntity,
 } from '../lib/StackOverflowAPI';
 import {getQuestion, listQuestionsForTag} from '../lib/urls';
+import {Loading} from './loading';
 
 function getTitle(tag: string, sort: string) {
   return (
@@ -55,11 +56,15 @@ export function Index({
         <label for="tag">Switch to tag:</label>
         <input type="text" name="tag" placeholder={DEFAULT_TAG}></input>
       </form>
-      <div id="questions">
-        {items.map((item) => (
-          <QuestionCard {...item} />
-        ))}
-      </div>
+      {items.length === 0 ? (
+        <Loading />
+      ) : (
+        <div id="questions">
+          {items.map((item) => (
+            <QuestionCard {...item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
