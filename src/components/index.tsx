@@ -7,6 +7,7 @@ import {
   QuestionsForTagEntity,
 } from '../lib/StackOverflowAPI';
 import {getQuestion, listQuestionsForTag} from '../lib/urls';
+import {useDocumentTitle} from '../lib/useDocumentTitle';
 import {Loading} from './loading';
 
 function getTitle(tag: string, sort: string) {
@@ -29,12 +30,12 @@ function QuestionCard({question_id, title}: QuestionsForTagEntity) {
 
 export function Index({
   path,
-  tag = DEFAULT_TAG,
   sort = DEFAULT_SORT,
+  tag = DEFAULT_TAG,
 }: {
   path: string;
-  tag?: string;
   sort?: string;
+  tag?: string;
 }) {
   const [items, setItems]: [
     items: Array<QuestionsForTagEntity>,
@@ -47,11 +48,14 @@ export function Index({
       .then((data: QuestionsForTagData) =>
         setItems((data && data.items) || []),
       );
-  }, []);
+  }, [sort, tag]);
+
+  const title = getTitle(tag, sort);
+  useDocumentTitle(title);
 
   return (
     <div>
-      <h3>{getTitle(tag, sort)}</h3>
+      <h3>{title}</h3>
       <form method="GET">
         <label for="tag">Switch to tag:</label>
         <input type="text" name="tag" placeholder={DEFAULT_TAG}></input>

@@ -7,6 +7,7 @@ import {
   QuestionEntity,
 } from '../lib/StackOverflowAPI';
 import {getQuestion} from '../lib/urls';
+import {useDocumentTitle} from '../lib/useDocumentTitle';
 import {Loading} from './loading';
 
 function Profile({link, creation_date, owner}: QuestionEntity | AnswerEntity) {
@@ -57,11 +58,13 @@ export function Question({
     fetch(getQuestion(questionId))
       .then((res) => res.json())
       .then((data: QuestionData) => setQuestion(data.items[0] || null));
-  }, []);
+  }, [questionId]);
 
   if (question === null) {
     return <Loading />;
   }
+
+  useDocumentTitle(question.title);
 
   return (
     <div>

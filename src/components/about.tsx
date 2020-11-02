@@ -1,6 +1,10 @@
 import {h} from 'preact';
 
+import {useDocumentTitle} from '../lib/useDocumentTitle';
+
 export function About({path}: {path: string}) {
+  useDocumentTitle('About SO PWA');
+
   return (
     <div>
       <h3>About SO PWA</h3>
