@@ -1,25 +1,41 @@
 import {h} from 'preact';
-import Router, {CustomHistory} from 'preact-router';
+import Router, {CustomHistory, RouterOnChangeArgs} from 'preact-router';
 
+import {DEFAULT_SORT, DEFAULT_TAG} from '../lib/constants';
 import {QuestionEntity, QuestionsForTagEntity} from '../lib/StackOverflowAPI';
 import {About} from './about';
-import {Index} from './index';
+import {Index, loadData as loadIndexData} from './index';
 import {Navbar} from './navbar';
-import {Question} from './question';
+import {Question, loadData as loadQuestionData} from './question';
+
+let initialQuestionsForTag: Array<QuestionsForTagEntity>;
+let initialQuestion: QuestionEntity;
+
+async function fetchInitialDataForRoute({current}: RouterOnChangeArgs) {
+  switch (current.type) {
+    case Index: {
+      initialQuestionsForTag = await loadIndexData(DEFAULT_TAG, DEFAULT_SORT);
+      break;
+    }
+
+    case Question: {
+      initialQuestion = await loadQuestionData(
+        (current.props as any).questionId,
+      );
+      break;
+    }
+  }
+}
 
 export function App({
   customHistory,
-  initialQuestion,
-  initialQuestionsForTag,
 }: {
-  initialQuestion?: QuestionEntity;
   customHistory?: CustomHistory;
-  initialQuestionsForTag?: Array<QuestionsForTagEntity>;
 }): h.JSX.Element {
   return (
     <div>
       <Navbar />
-      <Router history={customHistory}>
+      <Router history={customHistory} onChange={fetchInitialDataForRoute}>
         <About path="/about" />
         <Question
           path="/questions/:questionId"

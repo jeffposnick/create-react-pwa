@@ -31,6 +31,15 @@ function QuestionCard({
   );
 }
 
+export async function loadData(
+  tag: string,
+  sort: string,
+): Promise<Array<QuestionsForTagEntity>> {
+  const response = await fetch(listQuestionsForTag(tag, sort));
+  const data: QuestionsForTagData = await response.json();
+  return (data && data.items) || [];
+}
+
 export function Index({
   initialQuestionsForTag = [],
   path,
@@ -48,11 +57,7 @@ export function Index({
   ] = useState(initialQuestionsForTag);
 
   useEffect(() => {
-    fetch(listQuestionsForTag(tag, sort))
-      .then((res) => res.json())
-      .then((data: QuestionsForTagData) =>
-        setItems((data && data.items) || []),
-      );
+    loadData(tag, sort).then((items) => setItems(items));
   }, [sort, tag]);
 
   const title = getTitle(tag, sort);

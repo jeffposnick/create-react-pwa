@@ -46,6 +46,12 @@ function Answer(props: AnswerEntity): h.JSX.Element {
   );
 }
 
+export async function loadData(questionId: string): Promise<QuestionEntity> {
+  const response = await fetch(getQuestion(questionId));
+  const data: QuestionData = await response.json();
+  return data.items[0] || null;
+}
+
 export function Question({
   initialQuestion = null,
   path,
@@ -61,9 +67,7 @@ export function Question({
   ] = useState(initialQuestion);
 
   useEffect(() => {
-    fetch(getQuestion(questionId))
-      .then((res) => res.json())
-      .then((data: QuestionData) => setQuestion(data.items[0] || null));
+    loadData(questionId).then((question) => setQuestion(question));
   }, [questionId]);
 
   if (question === null) {
