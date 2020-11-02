@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import 'cross-fetch/polyfill';
 
 import path from 'path';
 

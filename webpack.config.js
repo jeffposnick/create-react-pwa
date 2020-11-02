@@ -5,7 +5,7 @@ module.exports = [
     entry: {
       server: './src/server/index.ts',
     },
-    mode: process.env.NODE_ENV || 'production',
+    mode: process.env.NODE_ENV || 'development',
     target: 'node',
     module: {
       rules: [
@@ -28,7 +28,7 @@ module.exports = [
     entry: {
       sw: './src/sw/index.ts',
     },
-    mode: process.env.NODE_ENV || 'production',
+    mode: process.env.NODE_ENV || 'development',
     target: 'webworker',
     module: {
       rules: [
